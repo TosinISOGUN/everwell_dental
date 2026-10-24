@@ -1,0 +1,710 @@
+@import "tailwindcss";
+
+/* Self-hosted type: Bricolage Grotesque (display, with optical sizing) and Geist (body), both variable fonts under the SIL OFL. */
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/fonts/bricolage-var.woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/geist-var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+  Clinic Mineral palette. One accent (the logo's deep teal) on a cool porcelain base in light mode
+  and a deep teal-black base in dark mode. The theme follows the visitor's system setting until
+  they use the toggle, which sets data-theme on <html>. Each mode is one locked theme.
+*/
+:root {
+  color-scheme: light;
+  --bg: #f4f7f7;
+  --bg-2: #e9f0f0;
+  --surface: #ffffff;
+  --line: rgb(20 40 43 / 0.13);
+  --text: #14282b;
+  --muted: #4b6164;
+  --accent: #305050;
+  --accent-hover: #234040;
+  --on-accent: #f4f7f7;
+  --tint: #88a0a8;
+  --shadow: 0 24px 48px -28px rgb(20 60 62 / 0.35);
+  --nav-h: 72px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0a1618;
+    --bg-2: #0f2023;
+    --surface: #13292d;
+    --line: rgb(232 242 242 / 0.14);
+    --text: #e8f2f2;
+    --muted: #9db5b8;
+    --accent: #8ec5c4;
+    --accent-hover: #a6d4d3;
+    --on-accent: #0a1618;
+    --tint: #4f6e73;
+    --shadow: 0 24px 48px -26px rgb(0 0 0 / 0.7);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0a1618;
+  --bg-2: #0f2023;
+  --surface: #13292d;
+  --line: rgb(232 242 242 / 0.14);
+  --text: #e8f2f2;
+  --muted: #9db5b8;
+  --accent: #8ec5c4;
+  --accent-hover: #a6d4d3;
+  --on-accent: #0a1618;
+  --tint: #4f6e73;
+  --shadow: 0 24px 48px -26px rgb(0 0 0 / 0.7);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-ink: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-tint: var(--tint);
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --radius-ui: 12px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.06;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  a {
+    color: inherit;
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+  button {
+    cursor: pointer;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: clamp(16px, 4vw, 48px);
+  }
+  .section {
+    padding-block: clamp(64px, 9vw, 128px);
+  }
+  .display-2xl {
+    font-size: clamp(3rem, 8.4vw, 7.4rem);
+    line-height: 0.94;
+    letter-spacing: -0.035em;
+    font-weight: 600;
+  }
+  .display-xl {
+    font-size: clamp(2.6rem, 6.4vw, 5.6rem);
+    line-height: 0.98;
+    letter-spacing: -0.032em;
+    font-weight: 600;
+  }
+  .display-lg {
+    font-size: clamp(2rem, 4.4vw, 3.6rem);
+    letter-spacing: -0.03em;
+    line-height: 1.04;
+  }
+  .display-md {
+    font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+    letter-spacing: -0.03em;
+  }
+  .lead {
+    font-size: clamp(1.06rem, 1.4vw, 1.25rem);
+    color: var(--muted);
+    max-width: 58ch;
+  }
+  .eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .prose-flow > * + * {
+    margin-top: 1.1em;
+  }
+  .prose-flow {
+    max-width: 62ch;
+    color: var(--muted);
+  }
+  .link-inline {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--tint);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+  .link-inline:hover {
+    text-decoration-color: var(--accent);
+  }
+
+  /* One radius system: 12px on buttons, cards, inputs and images. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 48px;
+    padding: 0 1.4rem;
+    border-radius: var(--radius-ui);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1;
+    text-decoration: none;
+    border: 1.5px solid transparent;
+    transition:
+      transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.2s,
+      border-color 0.2s,
+      color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:active {
+    transform: translateY(1px) scale(0.985);
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  .btn-primary:hover {
+    background: var(--accent-hover);
+  }
+  .btn-ghost {
+    border-color: var(--line);
+    color: var(--text);
+    background: transparent;
+  }
+  .btn-ghost:hover {
+    border-color: var(--text);
+  }
+  .btn-on-accent {
+    background: var(--on-accent);
+    color: var(--accent);
+  }
+  .btn-on-accent:hover {
+    background: color-mix(in oklab, var(--on-accent) 88%, var(--accent));
+  }
+  .btn-outline-on-accent {
+    border-color: color-mix(in oklab, var(--on-accent) 45%, transparent);
+    color: var(--on-accent);
+  }
+  .btn-outline-on-accent:hover {
+    border-color: var(--on-accent);
+  }
+  .btn-text {
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--accent);
+  }
+  .btn-text:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-ui);
+  }
+  .media {
+    border-radius: var(--radius-ui);
+    overflow: hidden;
+    background: var(--bg-2);
+  }
+
+  /* Form controls */
+  .field {
+    display: block;
+    width: 100%;
+    min-height: 48px;
+    padding: 0.7rem 0.9rem;
+    background: var(--surface);
+    color: var(--text);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-ui);
+    transition: border-color 0.2s;
+  }
+  .field:hover {
+    border-color: var(--tint);
+  }
+  .field:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-color: var(--accent);
+  }
+  .field[aria-invalid="true"] {
+    border-color: #b3261e;
+  }
+  :root[data-theme="dark"] .field[aria-invalid="true"] {
+    border-color: #ff8a80;
+  }
+  .field-error {
+    color: #b3261e;
+    font-size: 0.9rem;
+    margin-top: 0.4rem;
+  }
+  :root[data-theme="dark"] .field-error {
+    color: #ff8a80;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .field[aria-invalid="true"] {
+      border-color: #ff8a80;
+    }
+    :root:not([data-theme="light"]) .field-error {
+      color: #ff8a80;
+    }
+  }
+
+  /* Accordion on native <details>: keyboard and screen reader support come built in. */
+  .faq details {
+    border-bottom: 1px solid var(--line);
+  }
+  .faq summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    min-height: 64px;
+    padding-block: 0.9rem;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq summary .faq-icon {
+    flex: none;
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .faq details[open] summary .faq-icon {
+    transform: rotate(45deg);
+  }
+  .faq .faq-body {
+    padding-bottom: 1.4rem;
+    color: var(--muted);
+    max-width: 62ch;
+  }
+  .faq details[open] .faq-body {
+    animation: faq-in 0.3s ease both;
+  }
+  @keyframes faq-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+
+  /* Theme toggle and logo variants: the inline script resolves data-theme before first paint. */
+  .theme-sun,
+  .logo-dark {
+    display: none;
+  }
+  :root[data-theme="dark"] .theme-sun {
+    display: block;
+  }
+  :root[data-theme="dark"] .theme-moon,
+  :root[data-theme="dark"] .logo-light {
+    display: none;
+  }
+  :root[data-theme="dark"] .logo-dark {
+    display: block;
+  }
+
+  /* Hero entrance: plain CSS, so it also runs with no JavaScript. */
+  .rise {
+    animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--i, 0) * 80ms + 60ms);
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+  }
+  .settle {
+    animation: settle 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes settle {
+    from {
+      opacity: 0;
+      transform: scale(1.03);
+    }
+  }
+
+  /* Scroll reveals via scroll-driven animation; browsers without it simply show the content. */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 4% entry 32%;
+    }
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(26px);
+      }
+    }
+  }
+
+  /* ---------- Buttons: a little physical feedback ---------- */
+  .btn-primary:hover,
+  .btn-on-accent:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 26px -16px color-mix(in oklab, var(--accent) 80%, transparent);
+  }
+  .btn-text svg {
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .btn-text:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* ---------- Hero depth: the two photographs drift at different speeds as the page scrolls ---------- */
+  @supports (animation-timeline: scroll()) {
+    .drift {
+      animation: drift linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100vh;
+    }
+    @keyframes drift {
+      to {
+        transform: translateY(var(--drift, -40px));
+      }
+    }
+  }
+
+  /* ---------- Statement: words light up in reading order as they scroll up the screen ---------- */
+  @supports (animation-timeline: view()) {
+    .stmt-word {
+      display: inline-block;
+      animation: stmt linear both;
+      animation-timeline: view();
+      animation-range: cover 18% cover 38%;
+    }
+    @keyframes stmt {
+      from {
+        opacity: 0.16;
+      }
+    }
+  }
+
+  /* ---------- Service panels: an accordion of photographs on large screens, stacked cards below ---------- */
+  .panels {
+    display: grid;
+    gap: 12px;
+  }
+  .panel {
+    position: relative;
+    display: flex;
+    min-height: 24rem;
+    overflow: hidden;
+    isolation: isolate;
+    border-radius: var(--radius-ui);
+    background: var(--bg-2);
+    color: #f3f8f8;
+  }
+  .panel > picture,
+  .panel > picture img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+  }
+  .panel > picture img {
+    transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to top, rgb(8 24 26 / 0.9) 6%, rgb(8 24 26 / 0.46) 55%, rgb(8 24 26 / 0.06));
+  }
+  .panel-body {
+    align-self: flex-end;
+    padding: 1.5rem;
+    width: 100%;
+  }
+  .panel-more {
+    margin-top: 0.7rem;
+    max-width: 34ch;
+    font-size: 0.98rem;
+    color: rgb(243 248 248 / 0.88);
+  }
+  .panel-go {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    min-height: 44px;
+    font-weight: 600;
+  }
+  @media (min-width: 1024px) {
+    .panels {
+      display: flex;
+      height: clamp(32rem, 68vh, 42rem);
+    }
+    .panel {
+      flex: 1 1 0;
+      min-width: 0;
+      min-height: 0;
+      transition: flex-grow 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .panels:not(:hover):not(:focus-within) li:first-child > .panel,
+    .panel:hover,
+    .panel:focus-within {
+      flex-grow: 3.3;
+    }
+    .panel:hover > picture img,
+    .panel:focus-within > picture img {
+      transform: scale(1.04);
+    }
+    .panel-more,
+    .panel-go {
+      opacity: 0;
+      transform: translateY(10px);
+      transition:
+        opacity 0.4s ease,
+        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+    .panels:not(:hover):not(:focus-within) li:first-child > .panel .panel-more,
+    .panels:not(:hover):not(:focus-within) li:first-child > .panel .panel-go,
+    .panel:hover .panel-more,
+    .panel:hover .panel-go,
+    .panel:focus-within .panel-more,
+    .panel:focus-within .panel-go {
+      opacity: 1;
+      transform: none;
+      transition-delay: 0.18s;
+      pointer-events: auto;
+    }
+    .panel-body {
+      padding: 1.75rem;
+    }
+    .panel-more {
+      width: 19rem;
+    }
+  }
+
+  /* ---------- First-visit timeline: the line draws itself as it scrolls into view ---------- */
+  .steps {
+    position: relative;
+    display: grid;
+    gap: 2.5rem;
+    padding-left: 2.25rem;
+  }
+  .steps::before {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--accent);
+    transform-origin: top;
+  }
+  .step {
+    position: relative;
+  }
+  .step::before {
+    content: "";
+    position: absolute;
+    left: -2.25rem;
+    top: 0.45rem;
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+  }
+  @media (min-width: 1024px) {
+    .steps {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+      padding: 0;
+    }
+    .steps::before {
+      left: 0;
+      right: 0;
+      top: 7px;
+      bottom: auto;
+      width: auto;
+      height: 2px;
+      transform-origin: left;
+    }
+    .step {
+      padding-top: calc(var(--drop, 0rem) + 2.5rem);
+    }
+    .step::before {
+      left: 0;
+      top: 0;
+    }
+    .step::after {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 16px;
+      width: 2px;
+      height: calc(var(--drop, 0rem) + 1.25rem);
+      background: var(--line);
+    }
+  }
+  @supports (animation-timeline: view()) {
+    .steps::before {
+      animation: draw-y linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 45%;
+    }
+    @keyframes draw-y {
+      from {
+        transform: scaleY(0);
+      }
+    }
+    @media (min-width: 1024px) {
+      .steps::before {
+        animation-name: draw-x;
+      }
+      @keyframes draw-x {
+        from {
+          transform: scaleX(0);
+        }
+      }
+    }
+  }
+
+  /* ---------- Smile band: the framed photograph settles into place as it arrives ---------- */
+  @supports (animation-timeline: view()) {
+    .zoom-frame {
+      animation: zoom-frame linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 38%;
+    }
+    @keyframes zoom-frame {
+      from {
+        transform: scale(0.92);
+      }
+    }
+    .zoom-photo {
+      animation: zoom-photo linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+    @keyframes zoom-photo {
+      from {
+        transform: scale(1.14);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
+  }
+
+  /* ---------- Closing band: the logo mark, enlarged and cropped, sits behind the type ---------- */
+  .mark-on-dark,
+  .mark-on-light {
+    position: absolute;
+    right: -6%;
+    bottom: -18%;
+    width: min(46rem, 78%);
+    height: auto;
+    opacity: 0.1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .mark-on-light {
+    display: none;
+  }
+  :root[data-theme="dark"] .mark-on-dark {
+    display: none;
+  }
+  :root[data-theme="dark"] .mark-on-light {
+    display: block;
+    opacity: 0.12;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.001ms !important;
+    animation-timeline: none !important;
+  }
+}
